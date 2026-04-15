@@ -65,9 +65,15 @@ function connectVariablesToGLSL() {
   }
 }
 
+// Constants
+const POINT = 0;
+const TRIANGLE = 1;
+const CIRCLE = 2;
+
 // Globals related to UI
 let g_selectedColor = [1.0, 1.0, 1.0, 1.0]; // Default color is white
 let g_selectedSize = 5; // Default point size
+let g_selectedType = POINT; // Default shape type is point
 
 function addActionsForHtmlUI() {
   // Add actions for buttons
@@ -75,6 +81,10 @@ function addActionsForHtmlUI() {
   document.getElementById('red').onclick = function() { g_selectedColor = [1.0, 0.0, 0.0, 1.0]; }
   document.getElementById('blue').onclick = function() { g_selectedColor = [0.0, 0.0, 1.0, 1.0]; }
   document.getElementById('clearButton').onclick = function() { g_shapesList = [];  renderAllShapes(); }
+
+  document.getElementById('pointButton').onclick = function() { g_selectedType = POINT; }
+  document.getElementById('triButton').onclick = function() { g_selectedType = TRIANGLE; }
+  document.getElementById('circleButton').onclick = function() { g_selectedType = CIRCLE; }
 
   // Slider events
   document.getElementById('redSlide').addEventListener('mouseup', function() { g_selectedColor[0] = this.value / 100; });
@@ -116,28 +126,22 @@ function click(ev) {
   let [x, y] = convertCoordinatesEventToGL(ev);
 
  // Create and store a new point
-  let point = new Point();
+  let point;
+  if(g_selectedType == POINT) {
+    point = new Point();
+  } else if(g_selectedType == TRIANGLE) {
+    point = new Triangle();
+  } else {
+    point = new Circle();
+  }
+
+
   point.position = [x, y];
   point.color = g_selectedColor.slice();
   point.size = g_selectedSize;
   g_shapesList.push(point);
 
 
-  // // Store the coordinates to g_points array
-  // g_points.push([x, y]);
-
-  // g_colors.push(g_selectedColor.slice()); // Store the selected color for this point
-
-  // g_sizes.push(g_selectedSize); // Store the selected size for this point
-
-  // // Store the coordinates to g_points array
-  // if (x >= 0.0 && y >= 0.0) {      // First quadrant
-  //   g_colors.push([1.0, 0.0, 0.0, 1.0]);  // Red
-  // } else if (x < 0.0 && y < 0.0) { // Third quadrant
-  //   g_colors.push([0.0, 1.0, 0.0, 1.0]);  // Green
-  // } else {                         // Others
-  //   g_colors.push([1.0, 1.0, 1.0, 1.0]);  // White
-  // }
 
   // Draw every shape thats supposed to be drawn on the canvas
   renderAllShapes();
