@@ -2,15 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Change a point color</title>
+    <title>Super Cool Paint Program</title>
   </head>
 
   <body onload="main()">
     <canvas id="webgl" width="400" height="400">
     Please use a browser that supports "canvas"
     </canvas>
+    <img src="referenceDrawing.jpg" width="400" height="400" style="vertical-align:top;" />
 
     <br/>
+    <button type="button" id="recreateButton">Recreate Image</button>
+    <br/>
+
+    <p>I added a way to see the color and where the shape will be drawn before the user clicks to select it. Additionally I added a way to rotate the shape if you use the mouse wheel and a way to inverse the colors drawn on the canvas with the click of a button.</p>
 
     <p id="numdot">XXX</p>
 
@@ -18,12 +23,17 @@
     <button type="button" id="red">Red</button>
     <button type="button" id="blue">Blue</button>
     <button type="button" id="clearButton">Clear</button>
+    <button type="button" id="setCanvasButton">Set Canvas</button>
+    <button type="button" id="printButton">Print Points</button>
+    <button type="button" id="inverseButton">Inverse</button>
 
     <p>
     <button type="button" id="pointButton">Point</button>
     <button type="button" id="triButton">Triangle</button>
     <button type="button" id="circleButton">Circle</button>
 
+      <div id="colorDisplay" style="display:inline-block; width:50px; height:50px; border:2px solid black; background-color:rgb(255,255,255); vertical-align:middle;"></div>
+    
     <p>
     Red <input type="range" min="0" max="100" value="100" class="slider" id="redSlide">
     <p>
@@ -31,7 +41,9 @@
     <p>
     Blue <input type="range" min="0" max="100" value="0" class="slider" id="blueSlide">
     <p>
-    Size <input type="range" min="5" max="40" class="slider" id="sizeSlide">
+    Size <input type="range" min="5" max="120" class="slider" id="sizeSlide">
+    <p>
+    Segments <input type="range" min="3" max="64" value="10" class="slider" id="segmentSlide">
 
     <script src="lib/webgl-utils.js"></script>
     <script src="lib/webgl-debug.js"></script>

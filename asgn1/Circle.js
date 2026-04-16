@@ -5,6 +5,7 @@ class Circle {
     this.color = [1.0, 1.0, 1.0, 1.0];
     this.size = 5;
     this.segments = 10;
+    this.angle = 0;
   }
 
   render() {
@@ -24,8 +25,8 @@ class Circle {
     let angleStep=360/this.segments;
     for(var angle =0; angle < 360; angle+=angleStep) {
       let centerPt = [xy[0], xy[1]];
-      let angle1 = angle;
-      let angle2 = angle + angleStep;
+      let angle1 = angle + this.angle;
+      let angle2 = angle + angleStep + this.angle;
       let vec1 = [Math.cos(angle1*Math.PI/180)*d, Math.sin(angle1*Math.PI/180)*d];
       let vec2 = [Math.cos(angle2*Math.PI/180)*d, Math.sin(angle2*Math.PI/180)*d];
       let pt1 = [centerPt[0] + vec1[0], centerPt[1] + vec1[1]];

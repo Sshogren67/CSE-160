@@ -4,6 +4,7 @@ class Triangle {
     this.position = [0.0, 0.0];
     this.color = [1.0, 1.0, 1.0, 1.0];
     this.size = 5;
+    this.angle = 0;
   }
 
   render() {
@@ -23,7 +24,7 @@ class Triangle {
 
     // Draw
     var d = this.size/200.0; // delta
-    drawTriangle( [xy[0], xy[1],   xy[0] + d, xy[1],   xy[0], xy[1] + d] );
+    drawTriangle( buildRotatedVerts([0, 0, d, 0, 0, d], xy[0], xy[1], this.angle) );
   }
 }
 
